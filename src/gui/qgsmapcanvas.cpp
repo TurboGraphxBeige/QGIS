@@ -1318,7 +1318,14 @@ QgsRectangle QgsMapCanvas::optimalExtentForPointLayer( QgsVectorLayer *layer, co
 }
 
 void QgsMapCanvas::zoomToSelected( QgsVectorLayer *layer )
+//void QgsMapCanvas::zoomToSelected( QList<QgsVectorLayer *> *layers )
 {
+  emit messageEmitted( tr( "zoooooom" ), tr( "zooooom" ), Qgis::Warning );
+
+  for ( int i = 0; i < layers.size(); ++i )
+  {
+  }
+
   if ( !layer )
   {
     // use current layer by default
