@@ -863,8 +863,10 @@ class GUI_EXPORT QgsMapCanvas : public QGraphicsView
      * Zoom to the extent of the selected features of provided (vector) layer.
      * \param layer optionally specify different than current layer
      */
-    //void zoomToSelected( QgsVectorLayer *layers = nullptr );
-    void zoomToSelected( QList<QgsVectorLayer *> *layers = nullptr );
+    void zoomToSelected( QgsVectorLayer *layer = nullptr );
+
+    void zoomToAllSelected( const QList<QgsMapLayer *> &layers );
+
     /**
      * Set a list of resolutions (map units per pixel) to which to "snap to" when zooming the map
      * \param resolutions A list of resolutions

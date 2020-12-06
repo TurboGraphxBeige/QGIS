@@ -8189,7 +8189,19 @@ void QgisApp::zoomOut()
 
 void QgisApp::zoomToSelected()
 {
-  mMapCanvas->zoomToSelected();
+  //mMapCanvas->zoomToSelected();
+
+  QgsVectorLayer *layer = qobject_cast<QgsVectorLayer *>( mLayerTreeView->currentLayer() );
+  QList<QgsMapLayer *> layers = mLayerTreeView->selectedLayers();
+
+  if ( layers.size() > 1 && !layers.isEmpty() ) {
+    mMapCanvas->zoomToAllSelected(layers);
+    QgsMessageLog::logMessage("asd", "asd", Qgis::Warning, "True");
+  }
+  else if ( layers.size() <= 1 && layer)
+  {
+    mMapCanvas->zoomToSelected(layer);
+  }
 }
 
 void QgisApp::panToSelected()

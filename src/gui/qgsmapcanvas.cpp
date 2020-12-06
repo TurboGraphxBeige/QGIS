@@ -1318,14 +1318,7 @@ QgsRectangle QgsMapCanvas::optimalExtentForPointLayer( QgsVectorLayer *layer, co
 }
 
 void QgsMapCanvas::zoomToSelected( QgsVectorLayer *layer )
-//void QgsMapCanvas::zoomToSelected( QList<QgsVectorLayer *> *layers )
 {
-  emit messageEmitted( tr( "zoooooom" ), tr( "zooooom" ), Qgis::Warning );
-
-  for ( int i = 0; i < layers.size(); ++i )
-  {
-  }
-
   if ( !layer )
   {
     // use current layer by default
@@ -1352,6 +1345,66 @@ void QgsMapCanvas::zoomToSelected( QgsVectorLayer *layer )
   }
   zoomToFeatureExtent( rect );
 }
+
+void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> &layers) {
+  QgsVectorLayer *layer;
+
+  emit messageEmitted(tr("zoomToAllSelected(s)"), tr("zoomToAllSelected."), Qgis::Warning);
+
+  if (layers.isEmpty()) {
+    // use current layer by default
+    layer = qobject_cast<QgsVectorLayer *>(mCurrentLayer);
+  }
+
+  QgsRectangle rect;
+  QgsRectangle selectionExtent;
+
+  for (int i = 0; i < layers.size(); ++i) {
+    layer = qobject_cast<QgsVectorLayer *>(layers.at(i));
+    if (!layer || !layer->isSpatial() || layer->selectedFeatureCount() == 0)
+      continue;
+
+    rect = layer->boundingBoxOfSelected();
+
+    if (rect.isNull()) {
+      //emit messageEmitted( tr( "Cannot zoom to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning );
+      continue;
+    }
+
+    rect = mapSettings().layerExtentToOutputExtent(layer, rect);
+
+    if (layer->geometryType() == QgsWkbTypes::PointGeometry && rect.isEmpty()) {
+      rect = optimalExtentForPointLayer(layer, rect.center());
+    }
+
+    selectionExtent.combineExtentWith( rect );
+
+  }
+
+  zoomToFeatureExtent( selectionExtent );
+
+}
+
+//
+//  if ( !layer || !layer->isSpatial() || layer->selectedFeatureCount() == 0 )
+//    return;
+//
+//  QgsRectangle rect = layer->boundingBoxOfSelected();
+//  if ( rect.isNull() )
+//  {
+//    emit messageEmitted( tr( "Cannot zoom to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning );
+//    return;
+//  }
+//
+//  rect = mapSettings().layerExtentToOutputExtent( layer, rect );
+//
+//  if ( layer->geometryType() == QgsWkbTypes::PointGeometry && rect.isEmpty() )
+//  {
+//    rect = optimalExtentForPointLayer( layer, rect.center() );
+//  }
+//  zoomToFeatureExtent( rect );
+
+
 
 QgsDoubleRange QgsMapCanvas::zRange() const
 {

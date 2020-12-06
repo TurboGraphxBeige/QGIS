@@ -22,6 +22,7 @@
 #include "qgsmapcanvas.h"
 #include "qgsproject.h"
 #include "qgsvectorlayer.h"
+#include "qgsmessagelog.h"
 
 #include <QAction>
 
@@ -295,10 +296,16 @@ void QgsLayerTreeViewDefaultActions::zoomToLayer( QgsMapCanvas *canvas )
 void QgsLayerTreeViewDefaultActions::zoomToSelection( QgsMapCanvas *canvas )
 {
   QgsVectorLayer *layer = qobject_cast<QgsVectorLayer *>( mView->currentLayer() );
-  if ( !layer )
-    return;
+  QList<QgsMapLayer *> layers = mView->selectedLayers();
 
-  canvas->zoomToSelected( layer );
+  if ( layers.size() > 1 && !layers.isEmpty() ) {
+    canvas->zoomToAllSelected(layers);
+    QgsMessageLog::logMessage("asd", "asd", Qgis::Warning, "True");
+  }
+  else if ( layers.size() <= 1 && layer)
+  {
+    canvas->zoomToSelected(layer);
+  }
 }
 
 void QgsLayerTreeViewDefaultActions::zoomToGroup( QgsMapCanvas *canvas )
