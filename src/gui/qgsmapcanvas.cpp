@@ -1346,21 +1346,45 @@ void QgsMapCanvas::zoomToSelected( QgsVectorLayer *layer )
   zoomToFeatureExtent( rect );
 }
 
-void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> &layers) {
+void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> *layers, const bool zoomToAllSelectedBool) {
+//  if ( zoomToAllSelectedBool )
+//  {
+//    const QList<QgsMapLayer *> layers = this->layers();
+
+
+//    int layersize = layers.size();
+//
+//
+//    //emit messageEmitted(tr("zoomToAllSelected(s)"), tr(str), Qgis::Warning);
+//    //QgsVectorLayer *templayer;
+//    QgsMapLayer *templayer;
+//    for (int i = 0; i < layers.size(); ++i) {
+//      templayer = layers.at(i);
+//      QString testtest = templayer->name();
+//
+//      char *str = (char *) malloc(10);
+//      QByteArray ba = testtest.toLatin1();
+//      strcpy(str, ba.data());
+//      emit messageEmitted(tr("zoomToAllSelected(s)"), tr(str), Qgis::Warning);
+//    }
+//  }
+
   QgsVectorLayer *layer;
 
   emit messageEmitted(tr("zoomToAllSelected(s)"), tr("zoomToAllSelected."), Qgis::Warning);
 
-  if (layers.isEmpty()) {
-    // use current layer by default
-    layer = qobject_cast<QgsVectorLayer *>(mCurrentLayer);
-  }
-
   QgsRectangle rect;
   QgsRectangle selectionExtent;
 
-  for (int i = 0; i < layers.size(); ++i) {
-    layer = qobject_cast<QgsVectorLayer *>(layers.at(i));
+  for (int i = 0; i < layers->size(); ++i) {
+    layer = qobject_cast<QgsVectorLayer *>(layers->at(i));
+
+//    char *str = (char *) malloc(10);
+//    QByteArray ba = testtest.toLatin1();
+//    strcpy(str, ba.data());
+//    emit messageEmitted(tr("zoomToAllSelected(s)"), tr(str), Qgis::Warning);
+
+
     if (!layer || !layer->isSpatial() || layer->selectedFeatureCount() == 0)
       continue;
 

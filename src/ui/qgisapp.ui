@@ -1366,6 +1366,15 @@
     <string>Ctrl+J</string>
    </property>
   </action>
+  <action name="mActionZoomToAllSelected">
+   <property name="icon">
+    <iconset resource="../../images/images.qrc">
+     <normaloff>:/images/themes/default/mActionZoomToSelected.svg</normaloff>:/images/themes/default/mActionZoomToSelected.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom to All Selected</string>
+   </property>
+  </action>
   <action name="mActionZoomLast">
    <property name="icon">
     <iconset resource="../../images/images.qrc">

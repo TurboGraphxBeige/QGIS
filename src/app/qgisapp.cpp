@@ -2739,6 +2739,7 @@ void QgisApp::createActions()
   connect( mActionZoomFullExtent, &QAction::triggered, this, &QgisApp::zoomFull );
   connect( mActionZoomToLayer, &QAction::triggered, this, &QgisApp::zoomToLayerExtent );
   connect( mActionZoomToSelected, &QAction::triggered, this, &QgisApp::zoomToSelected );
+  connect( mActionZoomToAllSelected, &QAction::triggered, this, &QgisApp::zoomToAllSelected );
   connect( mActionZoomLast, &QAction::triggered, this, &QgisApp::zoomToPrevious );
   connect( mActionZoomNext, &QAction::triggered, this, &QgisApp::zoomToNext );
   connect( mActionZoomActualSize, &QAction::triggered, this, &QgisApp::zoomActualSize );
@@ -4094,6 +4095,7 @@ void QgisApp::setTheme( const QString &themeName )
   mActionZoomOut->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomOut.svg" ) ) );
   mActionZoomFullExtent->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomFullExtent.svg" ) ) );
   mActionZoomToSelected->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomToSelected.svg" ) ) );
+  mActionZoomToAllSelected->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomToSelected.svg" ) ) );
   mActionShowRasterCalculator->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionShowRasterCalculator.png" ) ) );
   mActionShowMeshCalculator->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionShowMeshCalculator.png" ) ) );
   mActionPan->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionPan.svg" ) ) );
@@ -8195,13 +8197,19 @@ void QgisApp::zoomToSelected()
   QList<QgsMapLayer *> layers = mLayerTreeView->selectedLayers();
 
   if ( layers.size() > 1 && !layers.isEmpty() ) {
-    mMapCanvas->zoomToAllSelected(layers);
+    mMapCanvas->zoomToAllSelected(&layers, false);
     QgsMessageLog::logMessage("asd", "asd", Qgis::Warning, "True");
   }
   else if ( layers.size() <= 1 && layer)
   {
     mMapCanvas->zoomToSelected(layer);
   }
+}
+
+void QgisApp::zoomToAllSelected()
+{
+    const QList<QgsMapLayer *> layers = mMapCanvas->layers();
+    mMapCanvas->zoomToAllSelected(&layers, true);
 }
 
 void QgisApp::panToSelected()
@@ -14721,6 +14729,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( isSpatial );
       mActionZoomToSelected->setEnabled( isSpatial );
+      mActionZoomToAllSelected->setEnabled( isSpatial );
       mActionLabeling->setEnabled( isSpatial );
       mActionDiagramProperties->setEnabled( isSpatial );
       mActionReverseLine->setEnabled( false );
@@ -14975,6 +14984,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( true );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15088,6 +15098,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15153,6 +15164,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15218,6 +15230,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );

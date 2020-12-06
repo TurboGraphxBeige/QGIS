@@ -865,7 +865,7 @@ class GUI_EXPORT QgsMapCanvas : public QGraphicsView
      */
     void zoomToSelected( QgsVectorLayer *layer = nullptr );
 
-    void zoomToAllSelected( const QList<QgsMapLayer *> &layers );
+    void zoomToAllSelected( const QList<QgsMapLayer *> *layers = nullptr, const bool zoomToAllSelectedBool = "False" );
 
     /**
      * Set a list of resolutions (map units per pixel) to which to "snap to" when zooming the map

@@ -511,6 +511,7 @@ class APP_EXPORT QgisApp : public QMainWindow, private Ui::MainWindow
     QAction *actionZoomFullExtent() { return mActionZoomFullExtent; }
     QAction *actionZoomToLayer() { return mActionZoomToLayer; }
     QAction *actionZoomToSelected() { return mActionZoomToSelected; }
+    QAction *actionZoomToAllSelected() { return mActionZoomToAllSelected; }
     QAction *actionZoomLast() { return mActionZoomLast; }
     QAction *actionZoomNext() { return mActionZoomNext; }
     QAction *actionZoomActualSize() { return mActionZoomActualSize; }
@@ -893,6 +894,8 @@ class APP_EXPORT QgisApp : public QMainWindow, private Ui::MainWindow
     void zoomToNext();
     //! Zoom to selected features
     void zoomToSelected();
+    //! Zoom to selected features
+    void zoomToAllSelected();
     //! Pan map to selected features
     void panToSelected();
 
