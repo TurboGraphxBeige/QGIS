@@ -12163,7 +12163,7 @@ void QgisApp::legendGroupSetWmsData()
 
 void QgisApp::zoomToLayerExtent()
 {
-  mLayerTreeView->defaultActions()->zoomToLayer( mMapCanvas );
+  mLayerTreeView->defaultActions()->zoomToLayers( mMapCanvas );
 }
 
 void QgisApp::showPluginManager()

@@ -96,7 +96,7 @@ class GUI_EXPORT QgsLayerTreeViewDefaultActions : public QObject
      */
     QAction *actionMutuallyExclusiveGroup( QObject *parent = nullptr ) SIP_FACTORY;
 
-    void zoomToLayer( QgsMapCanvas *canvas );
+    void zoomToLayers( QgsMapCanvas *canvas );
 
     /**
      * \see zoomToSelection()
@@ -113,7 +113,7 @@ class GUI_EXPORT QgsLayerTreeViewDefaultActions : public QObject
     void removeGroupOrLayer();
     void renameGroupOrLayer();
     void showFeatureCount();
-    void zoomToLayer();
+    void zoomToLayers();
 
     /**
      * Slot to zoom to selected features of a vector layer

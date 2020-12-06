@@ -93,7 +93,7 @@ QAction *QgsLayerTreeViewDefaultActions::actionZoomToLayer( QgsMapCanvas *canvas
   QAction *a = new QAction( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomToLayer.svg" ) ),
                             tr( "&Zoom to Layer(s)" ), parent );
   a->setData( QVariant::fromValue( reinterpret_cast<void *>( canvas ) ) );
-  connect( a, &QAction::triggered, this, static_cast<void ( QgsLayerTreeViewDefaultActions::* )()>( &QgsLayerTreeViewDefaultActions::zoomToLayer ) );
+  connect( a, &QAction::triggered, this, static_cast<void ( QgsLayerTreeViewDefaultActions::* )()>( &QgsLayerTreeViewDefaultActions::zoomToLayers ) );
   return a;
 }
 
@@ -281,7 +281,7 @@ void QgsLayerTreeViewDefaultActions::showFeatureCount()
 }
 
 
-void QgsLayerTreeViewDefaultActions::zoomToLayer( QgsMapCanvas *canvas )
+void QgsLayerTreeViewDefaultActions::zoomToLayers( QgsMapCanvas *canvas )
 {
   QList<QgsMapLayer *> layers = mView->selectedLayers();
   if ( layers.isEmpty() )
@@ -313,12 +313,12 @@ void QgsLayerTreeViewDefaultActions::zoomToGroup( QgsMapCanvas *canvas )
   zoomToLayers( canvas, layers );
 }
 
-void QgsLayerTreeViewDefaultActions::zoomToLayer()
+void QgsLayerTreeViewDefaultActions::zoomToLayers()
 {
   QAction *s = qobject_cast<QAction *>( sender() );
   QgsMapCanvas *canvas = reinterpret_cast<QgsMapCanvas *>( s->data().value<void *>() );
   QApplication::setOverrideCursor( Qt::WaitCursor );
-  zoomToLayer( canvas );
+  zoomToLayers( canvas );
   QApplication::restoreOverrideCursor();
 }
 
