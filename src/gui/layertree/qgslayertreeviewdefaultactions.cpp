@@ -281,7 +281,6 @@ void QgsLayerTreeViewDefaultActions::showFeatureCount()
     l->setCustomProperty( QStringLiteral( "showFeatureCount" ), newValue ? 0 : 1 );
 }
 
-
 void QgsLayerTreeViewDefaultActions::zoomToLayer( QgsMapCanvas *canvas )
 {
   QgsMapLayer *layer = mView->currentLayer();
@@ -347,7 +346,6 @@ void QgsLayerTreeViewDefaultActions::zoomToGroup()
   zoomToGroup( canvas );
   QApplication::restoreOverrideCursor();
 }
-
 
 void QgsLayerTreeViewDefaultActions::zoomToLayers( QgsMapCanvas *canvas, const QList<QgsMapLayer *> &layers )
 {
