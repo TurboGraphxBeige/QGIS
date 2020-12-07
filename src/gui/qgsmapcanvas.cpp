@@ -1331,7 +1331,7 @@ void QgsMapCanvas::zoomToSelected( QgsVectorLayer *layer )
   QgsRectangle rect = layer->boundingBoxOfSelected();
   if ( rect.isNull() )
   {
-    emit messageEmitted( tr( "Cannot zoom to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning );
+    emit messageEmitted( tr( "Cannot zoom to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning  );
     return;
   }
 
@@ -1347,53 +1347,25 @@ void QgsMapCanvas::zoomToSelected( QgsVectorLayer *layer )
 }
 
 void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> *layers, const bool zoomToAllSelectedBool) {
-//  if ( zoomToAllSelectedBool )
-//  {
-//    const QList<QgsMapLayer *> layers = this->layers();
-
-
-//    int layersize = layers.size();
-//
-//
-//    //emit messageEmitted(tr("zoomToAllSelected(s)"), tr(str), Qgis::Warning);
-//    //QgsVectorLayer *templayer;
-//    QgsMapLayer *templayer;
-//    for (int i = 0; i < layers.size(); ++i) {
-//      templayer = layers.at(i);
-//      QString testtest = templayer->name();
-//
-//      char *str = (char *) malloc(10);
-//      QByteArray ba = testtest.toLatin1();
-//      strcpy(str, ba.data());
-//      emit messageEmitted(tr("zoomToAllSelected(s)"), tr(str), Qgis::Warning);
-//    }
-//  }
 
   QgsVectorLayer *layer;
 
-  emit messageEmitted(tr("zoomToAllSelected(s)"), tr("zoomToAllSelected."), Qgis::Warning);
-
   QgsRectangle rect;
+  rect.setMinimal();
   QgsRectangle selectionExtent;
+  selectionExtent.setMinimal();
 
   for (int i = 0; i < layers->size(); ++i) {
-    layer = qobject_cast<QgsVectorLayer *>(layers->at(i));
-
-//    char *str = (char *) malloc(10);
-//    QByteArray ba = testtest.toLatin1();
-//    strcpy(str, ba.data());
-//    emit messageEmitted(tr("zoomToAllSelected(s)"), tr(str), Qgis::Warning);
-
+    if ( layers->at(i)->type() == QgsMapLayerType(0)  )
+      layer = qobject_cast<QgsVectorLayer *>(layers->at(i));
 
     if (!layer || !layer->isSpatial() || layer->selectedFeatureCount() == 0)
       continue;
 
     rect = layer->boundingBoxOfSelected();
 
-    if (rect.isNull()) {
-      //emit messageEmitted( tr( "Cannot zoom to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning );
+    if (rect.isNull())
       continue;
-    }
 
     rect = mapSettings().layerExtentToOutputExtent(layer, rect);
 
@@ -1402,33 +1374,16 @@ void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> *layers, const b
     }
 
     selectionExtent.combineExtentWith( rect );
+  }
 
+  if ( selectionExtent.isNull() )
+  {
+    emit messageEmitted( tr( "Cannot zoom to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning );
+    return;
   }
 
   zoomToFeatureExtent( selectionExtent );
-
 }
-
-//
-//  if ( !layer || !layer->isSpatial() || layer->selectedFeatureCount() == 0 )
-//    return;
-//
-//  QgsRectangle rect = layer->boundingBoxOfSelected();
-//  if ( rect.isNull() )
-//  {
-//    emit messageEmitted( tr( "Cannot zoom to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning );
-//    return;
-//  }
-//
-//  rect = mapSettings().layerExtentToOutputExtent( layer, rect );
-//
-//  if ( layer->geometryType() == QgsWkbTypes::PointGeometry && rect.isEmpty() )
-//  {
-//    rect = optimalExtentForPointLayer( layer, rect.center() );
-//  }
-//  zoomToFeatureExtent( rect );
-
-
 
 QgsDoubleRange QgsMapCanvas::zRange() const
 {
