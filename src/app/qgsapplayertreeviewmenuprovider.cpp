@@ -160,15 +160,20 @@ QMenu *QgsAppLayerTreeViewMenuProvider::createContextMenu()
           for ( int i = 0; i < selectedLayers.size(); ++i )
           {
             QgsMapLayer *layer = selectedLayers.at( i );
-            QgsVectorLayer *vLayer = qobject_cast<QgsVectorLayer *>( layer );
-
-            if ( !vLayer->selectedFeatureIds().isEmpty() )
+            QgsVectorLayer *vLayer;
+            if (layer->type() == QgsMapLayerType(0) )
             {
-              hasSelectedFeature = TRUE;
-              break;
+              QgsVectorLayer *vLayer = qobject_cast<QgsVectorLayer *>( layer );
+
+              if ( !vLayer->selectedFeatureIds().isEmpty() )
+              {
+                hasSelectedFeature = TRUE;
+                break;
+              }
+              else
+                hasSelectedFeature = FALSE;
             }
-            else
-              hasSelectedFeature = FALSE;
+
           }
           QAction *actionZoomSelected = actions->actionZoomToSelection( mCanvas, menu );
           actionZoomSelected->setEnabled( vlayer->isValid() && hasSelectedFeature );

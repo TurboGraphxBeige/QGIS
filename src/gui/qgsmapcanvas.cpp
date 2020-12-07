@@ -1356,7 +1356,7 @@ void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> *layers, const b
   selectionExtent.setMinimal();
 
   for (int i = 0; i < layers->size(); ++i) {
-    if ( layers->at(i)->type() == QgsMapLayerType(0)  )
+    if ( layers->at(i)->type() == QgsMapLayerType(0) )
       layer = qobject_cast<QgsVectorLayer *>(layers->at(i));
 
     if (!layer || !layer->isSpatial() || layer->selectedFeatureCount() == 0)
