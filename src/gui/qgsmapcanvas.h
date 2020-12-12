@@ -865,7 +865,11 @@ class GUI_EXPORT QgsMapCanvas : public QGraphicsView
      */
     void zoomToSelected( QgsVectorLayer *layer = nullptr );
 
-    void zoomToAllSelected( const QList<QgsMapLayer *> *layers = nullptr, const bool zoomToAllSelectedBool = "False" );
+    /**
+     * Zoom to the combined extent of the selected features of all provided (vector) layers.
+     * \param layers optionally specify different than selected layers in layer tree
+     */
+    void zoomToAllSelected( const QList<QgsMapLayer *> *layers = nullptr );
 
     /**
      * Set a list of resolutions (map units per pixel) to which to "snap to" when zooming the map

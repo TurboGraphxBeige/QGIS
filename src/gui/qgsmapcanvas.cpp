@@ -1346,7 +1346,7 @@ void QgsMapCanvas::zoomToSelected( QgsVectorLayer *layer )
   zoomToFeatureExtent( rect );
 }
 
-void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> *layers, const bool zoomToAllSelectedBool) {
+void QgsMapCanvas::zoomToAllSelected(const QList<QgsMapLayer *> *layers) {
 
   QgsVectorLayer *layer;
 
