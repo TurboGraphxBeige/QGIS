@@ -301,14 +301,12 @@ void QgsLayerTreeViewDefaultActions::zoomToSelection( QgsMapCanvas *canvas )
 
   QList<QgsMapLayer *> layers = mView->selectedLayers();
 
-  if ( layers.size() > 1 && !layers.isEmpty() ) {
+  if ( layers.size() > 1 && !layers.isEmpty() )
     canvas->zoomToAllSelected(&layers);
-    QgsMessageLog::logMessage("asd", "asd", Qgis::Warning, "True");
-  }
+
   else if ( layers.size() <= 1 && layer)
-  {
     canvas->zoomToSelected(layer);
-  }
+
 }
 
 void QgsLayerTreeViewDefaultActions::zoomToGroup( QgsMapCanvas *canvas )

@@ -59,6 +59,7 @@ class QgsHighlight;
 class QgsVectorLayer;
 
 class QgsLabelingResults;
+
 class QgsMapRendererCache;
 class QgsMapRendererQImageJob;
 class QgsMapSettings;
@@ -867,9 +868,9 @@ class GUI_EXPORT QgsMapCanvas : public QGraphicsView
 
     /**
      * Zoom to the combined extent of the selected features of all provided (vector) layers.
-     * \param layers optionally specify different than selected layers in layer tree
+     * \param layers A list of layers
      */
-    void zoomToAllSelected( const QList<QgsMapLayer *> *layers = nullptr );
+    void zoomToAllSelected( const QList<QgsMapLayer *> *layers );
 
     /**
      * Set a list of resolutions (map units per pixel) to which to "snap to" when zooming the map
