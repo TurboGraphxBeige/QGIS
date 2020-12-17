@@ -8197,7 +8197,7 @@ void QgisApp::zoomToSelected()
   QList<QgsMapLayer *> layers = mLayerTreeView->selectedLayers();
 
   if ( layers.size() > 1 && !layers.isEmpty() ) {
-    mMapCanvas->zoomToAllSelected(&layers, false);
+    mMapCanvas->zoomToAllSelected(&layers);
     QgsMessageLog::logMessage("asd", "asd", Qgis::Warning, "True");
   }
   else if ( layers.size() <= 1 && layer)
@@ -8209,7 +8209,7 @@ void QgisApp::zoomToSelected()
 void QgisApp::zoomToAllSelected()
 {
     const QList<QgsMapLayer *> layers = mMapCanvas->layers();
-    mMapCanvas->zoomToAllSelected(&layers, true);
+    mMapCanvas->zoomToAllSelected(&layers);
 }
 
 void QgisApp::panToSelected()
