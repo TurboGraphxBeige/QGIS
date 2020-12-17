@@ -312,6 +312,12 @@ class GUI_EXPORT QgsMapCanvas : public QGraphicsView
     void panToSelected( QgsVectorLayer *layer = nullptr );
 
     /**
+     * Pan to the combined extent of the selected features of all provided (vector) layers.
+     * \param layers A list of layers
+     */
+    void panToAllSelected( const QList<QgsMapLayer *> *layers );
+
+    /**
      * Causes a set of features with matching \a ids from a vector \a layer to flash
      * within the canvas.
      *

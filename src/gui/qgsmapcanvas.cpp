@@ -1536,6 +1536,47 @@ void QgsMapCanvas::panToSelected( QgsVectorLayer *layer )
   refresh();
 }
 
+void QgsMapCanvas::panToAllSelected( const QList<QgsMapLayer *> *layers )
+{
+  QgsVectorLayer *layer;
+
+  QgsRectangle rect;
+  rect.setMinimal();
+  QgsRectangle selectionExtent;
+  selectionExtent.setMinimal();
+
+  for (int i = 0; i < layers->size(); ++i) {
+    if ( layers->at(i)->type() == QgsMapLayerType(0) )
+      layer = qobject_cast<QgsVectorLayer *>(layers->at(i));
+
+    if (!layer || !layer->isSpatial() || layer->selectedFeatureCount() == 0)
+      continue;
+
+    rect = layer->boundingBoxOfSelected();
+
+    if (rect.isNull())
+      continue;
+
+    rect = mapSettings().layerExtentToOutputExtent(layer, rect);
+
+    if (layer->geometryType() == QgsWkbTypes::PointGeometry && rect.isEmpty()) {
+      rect = optimalExtentForPointLayer(layer, rect.center());
+    }
+
+    selectionExtent.combineExtentWith( rect );
+  }
+
+  if ( selectionExtent.isNull() )
+  {
+    emit messageEmitted( tr( "Cannot pan to selected feature(s)" ), tr( "No extent could be determined." ), Qgis::Warning );
+    return;
+  }
+
+//zoomToFeatureExtent( selectionExtent );
+  setCenter( selectionExtent.center() );
+  refresh();
+}
+
 void QgsMapCanvas::flashFeatureIds( QgsVectorLayer *layer, const QgsFeatureIds &ids,
                                     const QColor &color1, const QColor &color2,
                                     int flashes, int duration )

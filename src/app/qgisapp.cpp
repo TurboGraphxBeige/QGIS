@@ -2705,6 +2705,7 @@ void QgisApp::createActions()
   // View Menu Items
   connect( mActionPan, &QAction::triggered, this, &QgisApp::pan );
   connect( mActionPanToSelected, &QAction::triggered, this, &QgisApp::panToSelected );
+  connect( mActionPanToAllSelected, &QAction::triggered, this, &QgisApp::panToAllSelected );
   connect( mActionZoomIn, &QAction::triggered, this, &QgisApp::zoomIn );
   connect( mActionZoomOut, &QAction::triggered, this, &QgisApp::zoomOut );
   connect( mActionSelectFeatures, &QAction::triggered, this, &QgisApp::selectFeatures );
@@ -4100,6 +4101,7 @@ void QgisApp::setTheme( const QString &themeName )
   mActionShowMeshCalculator->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionShowMeshCalculator.png" ) ) );
   mActionPan->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionPan.svg" ) ) );
   mActionPanToSelected->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionPanToSelected.svg" ) ) );
+  mActionPanToAllSelected->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionPanToSelected.svg" ) ) );
   mActionZoomLast->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomLast.svg" ) ) );
   mActionZoomNext->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomNext.svg" ) ) );
   mActionZoomToLayer->setIcon( QgsApplication::getThemeIcon( QStringLiteral( "/mActionZoomToLayer.svg" ) ) );
@@ -8196,7 +8198,7 @@ void QgisApp::zoomToSelected()
   if ( layers.size() > 1 && !layers.isEmpty() )
     mMapCanvas->zoomToAllSelected(&layers);
 
-  else //if ( layers.size() <= 1)
+  else
     mMapCanvas->zoomToSelected();
 
 }
@@ -8209,7 +8211,19 @@ void QgisApp::zoomToAllSelected()
 
 void QgisApp::panToSelected()
 {
-  mMapCanvas->panToSelected();
+  QList<QgsMapLayer *> layers = mLayerTreeView->selectedLayers();
+
+  if ( layers.size() > 1 && !layers.isEmpty() )
+    mMapCanvas->panToAllSelected(&layers);
+
+  else //if ( layers.size() <= 1)
+    mMapCanvas->panToSelected();
+}
+
+void QgisApp::panToAllSelected()
+{
+  const QList<QgsMapLayer *> layers = mMapCanvas->layers();
+  mMapCanvas->panToAllSelected(&layers);
 }
 
 void QgisApp::pan()

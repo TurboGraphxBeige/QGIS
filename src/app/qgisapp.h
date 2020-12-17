@@ -497,6 +497,7 @@ class APP_EXPORT QgisApp : public QMainWindow, private Ui::MainWindow
     QAction *actionOffsetCurve() { return mActionOffsetCurve; }
     QAction *actionPan() { return mActionPan; }
     QAction *actionPanToSelected() { return mActionPanToSelected; }
+    QAction *actionPanToAllSelected() { return mActionPanToAllSelected; }
     QAction *actionZoomIn() { return mActionZoomIn; }
     QAction *actionZoomOut() { return mActionZoomOut; }
     QAction *actionSelect() { return mActionSelectFeatures; }
@@ -898,6 +899,8 @@ class APP_EXPORT QgisApp : public QMainWindow, private Ui::MainWindow
     void zoomToAllSelected();
     //! Pan map to selected features
     void panToSelected();
+    //! Pan map to selected features from multiple layers
+    void panToAllSelected();
 
     //! open the properties dialog for the currently selected layer
     void layerProperties();
