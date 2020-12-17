@@ -1372,7 +1372,7 @@
      <normaloff>:/images/themes/default/mActionZoomToSelected.svg</normaloff>:/images/themes/default/mActionZoomToSelected.svg</iconset>
    </property>
    <property name="text">
-    <string>Zoom to All Selected</string>
+    <string>Zoom to Selection from All Layers</string>
    </property>
   </action>
   <action name="mActionZoomLast">

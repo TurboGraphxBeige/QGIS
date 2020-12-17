@@ -85,7 +85,6 @@ email                : sherman at mrcc.com
 #include "qgsprojectionselectiondialog.h"
 #include "qgsannotationlayer.h"
 #include "qgsmaplayerelevationproperties.h"
-#include "qgslayertreeview.h"
 
 /**
  * \ingroup gui

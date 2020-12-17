@@ -22,7 +22,6 @@
 #include "qgsmapcanvas.h"
 #include "qgsproject.h"
 #include "qgsvectorlayer.h"
-#include "qgsmessagelog.h"
 
 #include <QAction>
 
