@@ -8191,19 +8191,15 @@ void QgisApp::zoomOut()
 
 void QgisApp::zoomToSelected()
 {
-  //mMapCanvas->zoomToSelected();
-
   QgsVectorLayer *layer = qobject_cast<QgsVectorLayer *>( mLayerTreeView->currentLayer() );
   QList<QgsMapLayer *> layers = mLayerTreeView->selectedLayers();
 
-  if ( layers.size() > 1 && !layers.isEmpty() ) {
+  if ( layers.size() > 1 && !layers.isEmpty() )
     mMapCanvas->zoomToAllSelected(&layers);
-    QgsMessageLog::logMessage("asd", "asd", Qgis::Warning, "True");
-  }
+
   else if ( layers.size() <= 1 && layer)
-  {
     mMapCanvas->zoomToSelected(layer);
-  }
+
 }
 
 void QgisApp::zoomToAllSelected()
@@ -14729,7 +14725,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( isSpatial );
       mActionZoomToSelected->setEnabled( isSpatial );
-      mActionZoomToAllSelected->setEnabled( isSpatial );
+      mActionZoomToAllSelected->setEnabled( true );
       mActionLabeling->setEnabled( isSpatial );
       mActionDiagramProperties->setEnabled( isSpatial );
       mActionReverseLine->setEnabled( false );
@@ -14984,7 +14980,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( true );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
-      mActionZoomToAllSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( true );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15098,7 +15094,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
-      mActionZoomToAllSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( true );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15164,7 +15160,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
-      mActionZoomToAllSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( true );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15230,7 +15226,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
-      mActionZoomToAllSelected->setEnabled( false );
+      mActionZoomToAllSelected->setEnabled( true );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );

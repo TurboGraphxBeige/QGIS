@@ -894,7 +894,7 @@ class APP_EXPORT QgisApp : public QMainWindow, private Ui::MainWindow
     void zoomToNext();
     //! Zoom to selected features
     void zoomToSelected();
-    //! Zoom to selected features
+    //! Zoom to selected features from multiple layers
     void zoomToAllSelected();
     //! Pan map to selected features
     void panToSelected();
