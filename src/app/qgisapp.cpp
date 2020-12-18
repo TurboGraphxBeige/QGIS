@@ -14709,6 +14709,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( isSpatial );
       mActionZoomToSelected->setEnabled( isSpatial );
+      mActionPanToSelected->setEnabled( isSpatial );
       mActionLabeling->setEnabled( isSpatial );
       mActionDiagramProperties->setEnabled( isSpatial );
       mActionReverseLine->setEnabled( false );
@@ -14963,6 +14964,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( true );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionPanToSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15076,6 +15078,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionPanToSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15141,6 +15144,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionPanToSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
@@ -15206,6 +15210,7 @@ void QgisApp::activateDeactivateLayerRelatedActions( QgsMapLayer *layer )
       mActionZoomActualSize->setEnabled( false );
       mActionZoomToLayer->setEnabled( true );
       mActionZoomToSelected->setEnabled( false );
+      mActionPanToSelected->setEnabled( false );
       mActionOpenTable->setEnabled( false );
       mActionSelectAll->setEnabled( false );
       mActionReselect->setEnabled( false );
