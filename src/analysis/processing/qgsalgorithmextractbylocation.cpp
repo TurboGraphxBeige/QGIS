@@ -135,20 +135,14 @@ void QgsLocationBasedAlgorithm::processByIteratingOverTargetSource( const QgsPro
     engine.reset();
 
     //QgsRectangle bbox = f.geometry().boundingBox();
-    const QgsRectangle bbox;
 
+    QgsRectangle bbox = f.geometry().boundingBox();
     const bool withinDistanceEnabled = true;
-
-    const int withinDistance = 1000;
+    const double withinDistance = 1000.0;
 
     if ( withinDistanceEnabled == true )
     {
-      bbox = f.geometry().boundingBox().grow( withinDistance );
-    }
-
-    else
-    {
-      bbox = f.geometry().boundingBox();
+      f.geometry().boundingBox().grow( withinDistance );
     }
 
     request = QgsFeatureRequest().setFilterRect( bbox ).setNoAttributes().setDestinationCrs( targetSource->sourceCrs(), context.transformContext() );
