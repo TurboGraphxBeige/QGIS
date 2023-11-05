@@ -944,7 +944,7 @@ void QgsDualView::widgetWillShowContextMenu( QgsActionMenu *menu, const QModelIn
 void QgsDualView::showViewHeaderMenu( QPoint point )
 {
   const int col = mTableView->columnAt( point.x() );
-  qDebug() << col;
+  qDebug() << "Col: " << col ;
 
   delete mHorizontalHeaderMenu;
   mHorizontalHeaderMenu = new QMenu( this );
@@ -1041,7 +1041,7 @@ void QgsDualView::calculateField()
 
     QgsAttributeTableConfig config = mConfig;
     const int sourceCol = config.mapVisibleColumnToIndex( col );
-    config.mapVisibleColumnToIndex()
+
     QTextStream(stdout) << col << endl;
     QTextStream(stdout) << sourceCol << endl;
 
