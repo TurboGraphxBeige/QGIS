@@ -46,7 +46,8 @@
 #include "qgsmessagebar.h"
 #include "qgsvectorlayereditbuffer.h"
 #include "qgsactionmenu.h"
-
+#include "qgsfieldcalculator.h"
+#include "qgsattributetablemodel.h"
 
 QgsDualView::QgsDualView( QWidget *parent )
   : QStackedWidget( parent )
@@ -943,14 +944,21 @@ void QgsDualView::widgetWillShowContextMenu( QgsActionMenu *menu, const QModelIn
 void QgsDualView::showViewHeaderMenu( QPoint point )
 {
   const int col = mTableView->columnAt( point.x() );
+  qDebug() << col;
 
   delete mHorizontalHeaderMenu;
   mHorizontalHeaderMenu = new QMenu( this );
+
+  QAction *calculateField = new QAction( tr( "&Calculate Field..." ), mHorizontalHeaderMenu );
+  connect( calculateField, &QAction::triggered, this, &QgsDualView::calculateField );
+  calculateField->setData( col );
+  mHorizontalHeaderMenu->addAction( calculateField );
 
   QAction *hide = new QAction( tr( "&Hide Column" ), mHorizontalHeaderMenu );
   connect( hide, &QAction::triggered, this, &QgsDualView::hideColumn );
   hide->setData( col );
   mHorizontalHeaderMenu->addAction( hide );
+
   QAction *setWidth = new QAction( tr( "&Set Width…" ), mHorizontalHeaderMenu );
   connect( setWidth, &QAction::triggered, this, &QgsDualView::resizeColumn );
   setWidth->setData( col );
@@ -978,6 +986,7 @@ void QgsDualView::showViewHeaderMenu( QPoint point )
   QAction *sort = new QAction( tr( "&Sort…" ), mHorizontalHeaderMenu );
   connect( sort, &QAction::triggered, this, [ = ]() {modifySort();} );
   mHorizontalHeaderMenu->addAction( sort );
+
 
   mHorizontalHeaderMenu->popup( mTableView->horizontalHeader()->mapToGlobal( point ) );
 }
@@ -1021,15 +1030,44 @@ void QgsDualView::hideColumn()
   }
 }
 
+
+void QgsDualView::calculateField()
+{
+    QAction *action = qobject_cast<QAction *>( sender() );
+    const int col = action->data().toInt();
+
+    if ( col < 0 )
+        return;
+
+    QgsAttributeTableConfig config = mConfig;
+    const int sourceCol = config.mapVisibleColumnToIndex( col );
+    config.mapVisibleColumnToIndex()
+    QTextStream(stdout) << col << endl;
+    QTextStream(stdout) << sourceCol << endl;
+
+    QgsFieldCalculator calc( mLayer, this, col );
+    if ( calc.exec() == QDialog::Accepted )
+    {
+        int col = mMasterModel->fieldCol( calc.changedAttributeId() );
+
+        if ( col >= 0 )
+        {
+            mMasterModel->reload( mMasterModel->index( 0, col ), mMasterModel->index( mMasterModel->rowCount() - 1, col ) );
+        }
+    }
+}
+
 void QgsDualView::resizeColumn()
 {
   QAction *action = qobject_cast<QAction *>( sender() );
   const int col = action->data().toInt();
+    QTextStream(stdout) << col << endl;
   if ( col < 0 )
     return;
 
   QgsAttributeTableConfig config = mConfig;
   const int sourceCol = config.mapVisibleColumnToIndex( col );
+    QTextStream(stdout) << sourceCol << endl;
   if ( sourceCol >= 0 )
   {
     bool ok = false;
