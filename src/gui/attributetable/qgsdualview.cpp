@@ -944,6 +944,7 @@ void QgsDualView::widgetWillShowContextMenu( QgsActionMenu *menu, const QModelIn
 void QgsDualView::showViewHeaderMenu( QPoint point )
 {
   const int col = mTableView->columnAt( point.x() );
+  qDebug() << "colname: " << mConfig.columns().at(col).name;
   qDebug() << "Col: " << col ;
 
   delete mHorizontalHeaderMenu;
@@ -953,6 +954,8 @@ void QgsDualView::showViewHeaderMenu( QPoint point )
   connect( calculateField, &QAction::triggered, this, &QgsDualView::calculateField );
   calculateField->setData( col );
   mHorizontalHeaderMenu->addAction( calculateField );
+
+  mHorizontalHeaderMenu->addSeparator();
 
   QAction *hide = new QAction( tr( "&Hide Column" ), mHorizontalHeaderMenu );
   connect( hide, &QAction::triggered, this, &QgsDualView::hideColumn );
@@ -1035,17 +1038,12 @@ void QgsDualView::calculateField()
 {
     QAction *action = qobject_cast<QAction *>( sender() );
     const int col = action->data().toInt();
+    int colIdx = mLayer->fields().lookupField( mConfig.columns().at(col).name );
 
     if ( col < 0 )
         return;
 
-    QgsAttributeTableConfig config = mConfig;
-    const int sourceCol = config.mapVisibleColumnToIndex( col );
-
-    QTextStream(stdout) << col << endl;
-    QTextStream(stdout) << sourceCol << endl;
-
-    QgsFieldCalculator calc( mLayer, this, col );
+    QgsFieldCalculator calc( mLayer, this, colIdx );
     if ( calc.exec() == QDialog::Accepted )
     {
         int col = mMasterModel->fieldCol( calc.changedAttributeId() );
