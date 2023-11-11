@@ -989,8 +989,7 @@ void QgsDualView::showViewHeaderMenu( QPoint point )
   mHorizontalHeaderMenu->addAction( fieldCalculator );
 
   mConfig.update( mLayer->fields() );
-  int field_idx = mLayer->fields().indexFromName( mConfig.columns().at(col).name );
-
+  int field_idx = mLayer->fields().indexFromName( mConfig.columns().at( col ).name );
   bool fieldCalculatorEnabled = false;
   int fieldOrigin  = mLayer->fields().fieldOrigin( field_idx );
 
@@ -1054,13 +1053,10 @@ void QgsDualView::hideColumn()
 void QgsDualView::fieldCalculator()
 {
     QAction *action = qobject_cast<QAction *>( sender() );
-    const int col = action->data().toInt();
+    const int col_idx = action->data().toInt();
 
     mConfig.update( mLayer->fields() );
-    int field_idx = mLayer->fields().indexFromName( mConfig.columns().at(col).name );
-
-    if ( col < 0 )
-        return;
+    int field_idx = mLayer->fields().indexFromName( mConfig.columns().at( col_idx ).name );
 
     QgsFieldCalculator calc( mLayer, this, field_idx );
     if ( calc.exec() == QDialog::Accepted )
